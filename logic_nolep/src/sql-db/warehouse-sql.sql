@@ -52,6 +52,14 @@ FROM Inventory i
 JOIN Products p ON p.product_id = i.product_id;
 
 
+-- SELECT 
+--     product_name,
+--     quantity,
+--     location
+-- FROM Inventory 
+-- JOIN Products ON Products.product_id = Inventory.product_id;
+
+
 UPDATE Products
 SET price = 1099.99
 WHERE product_name = 'Laptop';
