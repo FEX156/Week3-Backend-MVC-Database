@@ -1,19 +1,20 @@
 export interface Contact {
   id: number;
   nama: string;
-  phoneNumber: string;
+  phone_number: string;
   company: string;
   email: string;
 }
 
 export interface Groups {
   id: number;
-  groupName: string;
+  group_name: string;
 }
 
 export interface ContactGroups {
-  contactId: string;
-  groupId: number;
+  id: number;
+  contact_id: string;
+  group_id: number;
 }
 
 export interface ModelResponses<Tpayload> {
