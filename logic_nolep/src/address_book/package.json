@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tsx ./src/index.ts",
+    "start": "npx tsx ./src/index.ts",
     "migrate": "npx tsx ./src/db/migrate.ts",
     "test": "jest",
     "test:watch": "jest --watchAll"
@@ -12,6 +12,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "devDependencies": {
     "@types/node": "^25.0.3",
     "@types/pg": "^8.10.6",

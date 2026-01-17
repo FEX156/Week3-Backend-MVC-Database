@@ -1,6 +1,5 @@
 export class ContactGroupController {
-  public static async createContactGroup() {}
-  public static async updateContactGroup() {}
-  public static async deleteContactGroup() {}
-  public static async showContactGroup() {}
+  public static createContactGroup() {}
+  public static updateContactGroup() {}
+  public static deleteContactGroup() {}
 }

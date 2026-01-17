@@ -4,49 +4,49 @@ import type { Contact } from "../types/index.type";
 export class ContactRepository {
   public static async createContact(
     name: string,
-    phone_number?: string,
-    company?: string,
-    email?: string
+    phone_number: string | null,
+    company: string | null,
+    email: string | null
   ): Promise<Contact> {
-    const newContact = await pool.query(
+    const result = await pool.query(
       `INSERT INTO contacts (name, email, phone, company)
         VALUES ($1, $2, $3, $4)
         RETURNING *`,
       [name, email, phone_number, company]
     );
 
-    return newContact.rows[0];
+    return result.rows[0];
   }
 
   public static async updateContact(
     id: number,
     name: string,
-    phone_number?: string,
-    company?: string,
-    email?: string
+    phone_number: string | null,
+    company: string | null,
+    email: string | null
   ): Promise<Contact> {
-    const updatedContact = await pool.query(
+    const result = await pool.query(
       `UPDATE contacts
-        SET name = $2, email = $3, phone = $4, company = $5
+        SET name = $2, email = COALESCE($3, email), phone = COALESCE($4, phone), company = COALESCE($5, company)
         WHERE contact_id = $1
         RETURNING *`,
       [id, name, email, phone_number, company]
     );
 
-    return updatedContact.rows[0];
+    return result.rows[0];
   }
 
   public static async deleteContact(id: number): Promise<boolean> {
-    const deletedContact = await pool.query(
+    const result = await pool.query(
       `DELETE FROM contacts WHERE contact_id = $1`,
       [id]
     );
 
-    return deletedContact.rowCount === 1;
+    return result.rowCount === 1;
   }
 
-  public static async showContact(): Promise<Contact[]> {
-    const allContact = await pool.query(`SELECT
+  public static async showContacts(): Promise<Contact[]> {
+    const allResult = await pool.query(`SELECT
         c.contact_id,
         c.name,
         c.email,
@@ -62,6 +62,6 @@ export class ContactRepository {
       GROUP BY c.contact_id
       ORDER BY c.contact_id`);
 
-    return allContact.rows;
+    return allResult.rows;
   }
 }

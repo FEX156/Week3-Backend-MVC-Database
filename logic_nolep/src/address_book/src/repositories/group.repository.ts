@@ -1,36 +1,39 @@
 import { pool } from "../db/pool";
+import type { Group } from "../types/index.type";
 
 export class GroupRepository {
-  public static async createGroup(group_name: string) {
-    const newGroup = await pool.query(
+  public static async createGroup(group_name: string): Promise<Group> {
+    const result = await pool.query(
       `INSERT INTO groups (group_name) VALUES ($1) RETURNING *`,
       [group_name]
     );
-    return newGroup.rows[0];
+    return result.rows[0];
   }
 
-  public static async updateGroup(id: number, group_name: string) {
-    const updatedGroup = await pool.query(
+  public static async updateGroup(
+    id: number,
+    group_name: string
+  ): Promise<Group> {
+    const result = await pool.query(
       `UPDATE groups SET group_name = $2 
         WHERE group_id = $1 
         RETURNING *`,
       [id, group_name]
     );
 
-    return updatedGroup.rows[0];
+    return result.rows[0];
   }
 
-  public static async deleteGroup(id: number) {
-    const deletedGroup = await pool.query(
-      `DELETE FROM groups WHERE group_id = $1`,
-      [id]
-    );
+  public static async deleteGroup(id: number): Promise<boolean> {
+    const result = await pool.query(`DELETE FROM groups WHERE group_id = $1`, [
+      id,
+    ]);
 
-    return deletedGroup.rowCount === 1;
+    return result.rowCount === 1;
   }
 
-  public static async showGroups() {
-    const allGroup = await pool.query(`SELECT
+  public static async showGroups(): Promise<Group[]> {
+    const allResult = await pool.query(`SELECT
         g.group_id,
         g.group_name,
         COALESCE(
@@ -48,6 +51,6 @@ export class GroupRepository {
         UP BY g.group_id
         ER BY g.group_id;`);
 
-    return allGroup.rows;
+    return allResult.rows;
   }
 }
