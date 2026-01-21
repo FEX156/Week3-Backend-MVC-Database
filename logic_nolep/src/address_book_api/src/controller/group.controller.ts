@@ -30,7 +30,7 @@ export class GroupController {
       );
       res.status(201).json({
         succes: true,
-        message: "Berhasil memperbarui group",
+        message: "Berhasil memperbarui memperbarui group",
         data: contact,
       });
     } catch (e) {
@@ -46,7 +46,11 @@ export class GroupController {
       const contact = await GroupService.deleteGroup(
         Number(req.params.groupId),
       );
-      res.status(201).json(contact);
+      res.status(201).json({
+        succes: true,
+        message: "Berhasil menghapus group",
+        affectedRow: contact,
+      });
     } catch (e) {
       next(e);
     }
@@ -58,7 +62,10 @@ export class GroupController {
   ) {
     try {
       const contact = await GroupService.showGroups();
-      res.status(201).json(contact);
+      res.status(201).json({
+        succes: true,
+        data: contact,
+      });
     } catch (e) {
       next(e);
     }

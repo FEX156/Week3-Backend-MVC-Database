@@ -6,13 +6,15 @@ export class ContactGroupRepository {
     contact_id: number,
     group_id: number,
   ): Promise<ContactGroupDTO> {
+    console.log(typeof contact_id);
+    console.log(typeof group_id);
     const result = await pool.query(
-      `INSERT INTO contact_group (contact_id, group_id)
+      `INSERT INTO contact_groups (contact_id, group_id)
       VALUES ($1, $2)
       RETURNING *`,
       [contact_id, group_id],
     );
-
+    console.log(result);
     return result.rows[0];
   }
 
@@ -22,7 +24,7 @@ export class ContactGroupRepository {
     group_id: number,
   ): Promise<ContactGroupDTO> {
     const result = await pool.query(
-      `UPDATE contact_group
+      `UPDATE contact_groups
       SET contact_id = $2, contact_name = $3
       WHERE contact_group_id = $1
       RETURNING *`,

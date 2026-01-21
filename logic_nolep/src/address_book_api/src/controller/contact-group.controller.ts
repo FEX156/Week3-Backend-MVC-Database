@@ -9,7 +9,11 @@ export class ContactGroupController {
   ) {
     try {
       const contact = await ContactGroupService.createContactGroup(req.body);
-      res.status(201).json(contact);
+      res.status(201).json({
+        succes: true,
+        message: "Berhasil membuat kontak group baru",
+        data: contact,
+      });
     } catch (e) {
       next(e);
     }
@@ -24,7 +28,11 @@ export class ContactGroupController {
         Number(req.params.contactGroupId),
         req.body,
       );
-      res.status(201).json(contact);
+      res.status(201).json({
+        succes: true,
+        message: "Berhasil memperbarui kontak group",
+        data: contact,
+      });
     } catch (e) {
       next(e);
     }
@@ -38,7 +46,11 @@ export class ContactGroupController {
       const contact = await ContactGroupService.deleteContactGroup(
         Number(req.params.contactGroupId),
       );
-      res.status(201).json(contact);
+      res.status(201).json({
+        succes: true,
+        message: "Berhasil menghapus kontak group",
+        affectedRow: contact,
+      });
     } catch (e) {
       next(e);
     }
